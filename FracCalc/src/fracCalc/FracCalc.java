@@ -34,10 +34,9 @@ public class FracCalc {
     	String operator = equat[1];
     	Fraction operand1 = new Fraction(equat[0]);
     	Fraction operand2 = new Fraction(equat[2]);
-    	Fraction answer = new Fraction();
+    	String answer = doMath(operand1, operator, operand2);
     	
-    	
-        return "";
+        return answer;
     }
 
     // TODO: Fill in the space below with any helper methods that you think you will need
