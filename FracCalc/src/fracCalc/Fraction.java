@@ -5,34 +5,36 @@ public class Fraction {
 	private int whole;
 	private int numer;
 	private int denom;
-	private int[] frac;
-	private int[] improperFrac;
+	private int[] improperFrac = {0,0};
 // TODO: Fill in the space below with any helper methods that you think you will need
-public Fraction() {
+public Fraction() {//auto-int
 	whole = 0;
 	numer = 0;
 	denom = 1;
-	frac = new int[3];
 	}
-public Fraction(String operand){
-	String[] operandArray = operand.split("_|\\/");//split by _ and /
-	//setting values for whole, numer, denom
-	   if(operandArray.length==2) {
-		  whole = 0;
-		  numer = Integer.parseInt(operandArray[0]);
-		  denom = Integer.parseInt(operandArray[1]);
-	   }else if (operandArray.length==1) {
-		   whole = Integer.parseInt(operandArray[0]);
-		   numer = 0;
-		   denom = 1;
-	   }else if (operandArray.length==3) {
-		   whole = Integer.parseInt(operandArray[0]);
+public Fraction(String operand){//sets vals of whole, numer, denom and makes improperFrac
+	
+	if(operand.indexOf("_")>0 && operand.indexOf("/")>0) {
+		
+		String[] operandArray = operand.split("_|\\/"); //splits _ and / ,, "|" makes it not split "_/" ,, "\\" separates them?
+		 whole = Integer.parseInt(operandArray[0]);
 		   numer = Integer.parseInt(operandArray[1]);
 		   denom = Integer.parseInt(operandArray[2]);
-		   }
-	   	frac[0] = whole;//makes fraction into proper format whole num, numerator, denominator 
-	   	frac[1] = numer;
-	   	frac[2] = denom;
+		   
+	}else if (operand.indexOf("_")<0 && operand.indexOf("/")>0) {
+		
+		String[] operandArray = operand.split("/");
+		 whole = 0;
+		 numer = Integer.parseInt(operandArray[0]);
+		 denom = Integer.parseInt(operandArray[1]);
+		
+	}else if (operand.indexOf("_")<0 && operand.indexOf("/")<0){
+		
+		String[] operandArray = {operand};
+		 whole = Integer.parseInt(operandArray[0]);
+		 numer = 0;
+		 denom = 1;
+	}
 	   	if (whole<0 && numer>0) {//so that if it is a negative whole number, it stays negative when it goes to improper
 			   numer = numer*-1;
 		   }
