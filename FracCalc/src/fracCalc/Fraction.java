@@ -13,7 +13,6 @@ public Fraction() {
 	numer = 0;
 	denom = 1;
 	frac = new int[3];
-	improperFrac = new int[2];
 	}
 public Fraction(String operand){
 	String[] operandArray = operand.split("_|\\/");//split by _ and /
@@ -34,11 +33,11 @@ public Fraction(String operand){
 	   	frac[0] = whole;//makes fraction into proper format whole num, numerator, denominator 
 	   	frac[1] = numer;
 	   	frac[2] = denom;
-	   	if (frac[0]<0 && frac[1]>0) {//so that if it is a negative whole number, it stays negative when it goes to improper
-			   frac[1] = frac[1]*-1;
+	   	if (whole<0 && numer>0) {//so that if it is a negative whole number, it stays negative when it goes to improper
+			   numer = numer*-1;
 		   }
-		   int numerator = ((frac[0]*frac[2])+frac[1]);
-		   int denominator = frac[2];
+		   int numerator = ((whole*denom)+numer);
+		   int denominator = denom;
 		   improperFrac[0] = numerator;
 		   improperFrac[1] = denominator;
 	   }
@@ -99,14 +98,14 @@ public static int gcf(int num1, int num2) { //finds gcf, two int to int
 return answer;
 }
 public static String multiply(Fraction num1,Fraction num2) {//if there was a * will go to this
-   	int newNumer = (num1[0])*(num2)[0]);//takes array of numer and denom and multiplies
-    int newDenom = ((toImproper(num1))[1])*((toImproper(num2))[1]);
+   	int newNumer = (num1.improperFrac[0])*(num2.improperFrac[0]);//takes array of numer and denom and multiplies
+    int newDenom = (num1.improperFrac[1])*(num2.improperFrac[1]);
    return newNumer + "/" + newDenom;
 }
-public static String division(int[] num1,int[] num2) {//takes array of numer and denom and divides
+public static String division(Fraction num1,Fraction num2) {//takes array of numer and denom and divides
 	   //System.out.println(((toImproper(num1))[0]) + "and" + ((toImproper(num2))[1]));
-	   int numer = ((toImproper(num1))[0])*((toImproper(num2))[1]);
-	   int denom = ((toImproper(num1))[1])*((toImproper(num2))[0]);
+	   int numer = (num1.improperFrac[0])*(num2.improperFrac[1]);
+	   int denom = (num1.improperFrac[1])*(num2.improperFrac[0]);
 	   if(denom<0) {
 		   denom *= -1;
 		   numer *= -1;
@@ -119,15 +118,15 @@ public static int[] toSameDenom(int[] num1, int[] num2) {
 	   return newNum;
 	   
 }
-public static String addition(int[] num1,int[] num2) {//adds
-	 int numerator = toSameDenom(toImproper(num1),toImproper(num2))[0] + toSameDenom(toImproper(num2),toImproper(num1))[0]; //adds numerators of the fractions that now have the same denom
-	 int denom = toSameDenom(toImproper(num1),toImproper(num2))[1];//both have same denom anyways
+public static String addition(Fraction num1,Fraction num2) {//adds
+	 int numerator = toSameDenom(num1.improperFrac,num2.improperFrac)[0] + toSameDenom(num2.improperFrac,num1.improperFrac)[0]; //adds numerators of the fractions that now have the same denom
+	 int denom = toSameDenom(num1.improperFrac,num2.improperFrac)[1];//both have same denom anyways
 	 //System.out.println(numerator + "/" + denom);
 	 return numerator + "/" + denom;
 }
-public static String subtraction(int[] num1, int[] num2) {//subtracts
-	   int numerator = toSameDenom(toImproper(num1),toImproper(num2))[0] - toSameDenom(toImproper(num2),toImproper(num1))[0];
-	   int denom = toSameDenom(toImproper(num1),toImproper(num2))[1];//both have same denom anyways
+public static String subtraction(Fraction num1, Fraction num2) {//subtracts
+	   int numerator = toSameDenom(num1.improperFrac,num2.improperFrac)[0] - toSameDenom(num2.improperFrac,num1.improperFrac)[0];
+	   int denom = toSameDenom(num1.improperFrac,num2.improperFrac)[1];//both have same denom anyways
 	   return numerator + "/" + denom;
 }
 	public static String toMixedNum(int[] intFrac) { //improper fraction to mixed number-- 2 ints to string
@@ -165,13 +164,13 @@ public static String toReduced(String answer) {
 public static String doMath( Fraction op1,String operator, Fraction op2) {
 	 String answer = "";
      if(operator.equals("+")) {
-   	  answer = addition(num1,num2);
+   	  answer = addition(op1,op2);
      } else if (operator.equals("-")) {
-   	  answer = subtraction(num1,num2);
+   	  answer = subtraction(op1,op2);
      } else  if (operator.equals("*")) {
-   	  answer = multiply(num1,num2);
+   	  answer = multiply(op1,op2);
      } else if (operator.equals("/")){
-   	  answer = division(num1,num2);
+   	  answer = division(op1,op2);
      }else {
    	  answer = "Not a valid operator";
      }
