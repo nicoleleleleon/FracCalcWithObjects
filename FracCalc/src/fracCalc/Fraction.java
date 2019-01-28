@@ -5,7 +5,7 @@ public class Fraction {
 	private int whole;
 	private int numer;
 	private int denom;
-	private int[] improperFrac = {0,0};
+	private int[] improperFrac = {0,1};
 // TODO: Fill in the space below with any helper methods that you think you will need
 public Fraction() {//auto-int
 	whole = 0;
